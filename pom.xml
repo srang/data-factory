@@ -9,6 +9,28 @@
     <packaging>jar</packaging>
     <name>Data Factory</name>
     <description>Library for generating rich objects</description>
+    <url>https://github.com/srang/DataFactory</url>
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+    <contributors>
+        <contributor>
+            <name>Sam Rang</name>
+            <url>https://github.com/srang</url>
+            <email>srang2010@gmail.com</email>
+            <roles>
+                <role>author</role>
+            </roles>
+        </contributor>
+    </contributors>
+    <scm>
+        <connection>scm:git:git://github.com/srang/DataFactory.git</connection>
+        <developerConnection>scm:git:ssh://github.com:srang/DataFactory.git</developerConnection>
+        <url>http://github.com/srang/DataFactory/tree/master</url>
+    </scm>
     <properties>
         <java.version>1.8</java.version>
         <junit.version>4.12</junit.version>
@@ -61,6 +83,56 @@
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.10.4</version>
+                <configuration>
+                    <outputDirectory>target/apidoc</outputDirectory>
+                    <jarOutputDirectory>target/apidoc</jarOutputDirectory>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>javadocs</id>
+                        <goals>
+                            <goal>javadoc</goal>
+                        </goals>
+                        <phase>prepare-package</phase>
+                    </execution>
+                    <execution>
+                        <id>javadoc-jar</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <phase>package</phase>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <version>1.12</version>
+                <configuration>
+                    <licenseName>apache_v2</licenseName>
+                    <licenseResolver>${project.baseUri}/resources/license</licenseResolver>
+                    <roots>
+                        <root>src/main/java</root>
+                        <root>src/test</root>
+                    </roots>
+                    <force>true</force>
+                    <inceptionYear>2017</inceptionYear>
+                    <organizationName>srang</organizationName>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>first</id>
+                        <goals>
+                            <goal>update-file-header</goal>
+                        </goals>
+                        <phase>process-sources</phase>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
