@@ -32,12 +32,27 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 
+/**
+ * <p>Abstract BaseFieldPopulationStrategy class.</p>
+ *
+ * @author srang
+ */
 public abstract class BaseFieldPopulationStrategy implements FieldPopulationStrategy {
+    /** Constant <code>PACKAGE_PREFIX="package com"</code> */
     protected static final String PACKAGE_PREFIX = "package com"; // TODO get from constructor
     protected Faker faker;
     protected List<String> ignoredFields;
     protected LinkedList<Filter> filters;
 
+    /**
+     * <p>create.</p>
+     *
+     * @param c a {@link java.lang.Class} object.
+     * @param faker a {@link com.github.javafaker.Faker} object.
+     * @param <T> a T object.
+     * @return a T object.
+     * @throws com.github.srang.datafactory.ObjectFieldGenerationException if any.
+     */
     public static <T extends BaseFieldPopulationStrategy> T create(Class<T> c, Faker faker) throws ObjectFieldGenerationException {
         try {
             T populator = c.getConstructor(Faker.class).newInstance(faker);
@@ -48,6 +63,11 @@ public abstract class BaseFieldPopulationStrategy implements FieldPopulationStra
         }
     }
 
+    /**
+     * <p>Constructor for BaseFieldPopulationStrategy.</p>
+     *
+     * @param faker a {@link com.github.javafaker.Faker} object.
+     */
     protected BaseFieldPopulationStrategy(Faker faker) {
         this.ignoredFields = new ArrayList<>();
         this.filters = new LinkedList<>();
@@ -79,18 +99,31 @@ public abstract class BaseFieldPopulationStrategy implements FieldPopulationStra
                 (Faker faker, Field field, Object obj) -> ignoredFields.contains(field.getName().toLowerCase())
         );
     }
+    /** {@inheritDoc} */
     public abstract boolean populateField(Object obj, Field field) throws ObjectFieldGenerationException, MalformedFilterException;
 
 
+    /**
+     * <p>addFilter.</p>
+     *
+     * @param filter a {@link com.github.srang.datafactory.BaseFieldPopulationStrategy.FilterProcessor} object.
+     */
     public abstract void addFilter(FilterProcessor filter);
 
+    /** {@inheritDoc} */
     public abstract void ignoreField(String fieldName);
 
+    /**
+     * <p>addFilter.</p>
+     *
+     * @param filter a {@link com.github.srang.datafactory.BaseFieldPopulationStrategy.Filter} object.
+     */
     protected void addFilter(Filter filter) {
         this.filters.push(filter);
     }
 
 
+    /** {@inheritDoc} */
     public void addFilter(Predicate<Field> check, Supplier<?> evaluator) {
         addFilter(new Filter(check, evaluator));
     }

@@ -27,20 +27,42 @@ import java.util.Date;
 import java.util.TimeZone;
 
 
+/**
+ * <p>DateUtil class.</p>
+ *
+ * @author srang
+ */
 public class DateUtil {
     
     static SimpleDateFormat dateTimeFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
     static SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
     
 
+        /**
+         * <p>getCurrentDate.</p>
+         *
+         * @return a {@link java.util.Date} object.
+         */
         public static Date getCurrentDate() {
             Calendar cal = Calendar.getInstance();
             return cal.getTime();
         }
+        /**
+         * <p>getCurrentDateTimeString.</p>
+         *
+         * @return a {@link java.lang.String} object.
+         */
         public static String getCurrentDateTimeString(){           
             return dateTimeFormatter.format(getCurrentDate());     
         }
         
+        /**
+         * <p>getDateTimeFromString.</p>
+         *
+         * @param date a {@link java.lang.String} object.
+         * @return a {@link java.util.Date} object.
+         * @throws java.text.ParseException if any.
+         */
         public static Date getDateTimeFromString(String date) throws ParseException{
             if (date == null){
                 return null;                
@@ -54,6 +76,13 @@ public class DateUtil {
             return dateTimeFormatter.parse(date);
         }
 
+        /**
+         * <p>getDateOnlyFromString.</p>
+         *
+         * @param date a {@link java.lang.String} object.
+         * @return a {@link java.util.Date} object.
+         * @throws java.text.ParseException if any.
+         */
         public static Date getDateOnlyFromString(String date) throws ParseException {
             if (date == null){
                 return null;
@@ -67,6 +96,14 @@ public class DateUtil {
             return dateFormatter.parse(date);
         }
         
+        /**
+         * <p>getDateTimeFromString.</p>
+         *
+         * @param date a {@link java.lang.String} object.
+         * @param currentDateFormat a {@link java.text.SimpleDateFormat} object.
+         * @return a {@link java.util.Date} object.
+         * @throws java.text.ParseException if any.
+         */
         public static Date getDateTimeFromString(String date, SimpleDateFormat currentDateFormat) throws ParseException{
             if (date == null){
                 return null;                
@@ -81,12 +118,25 @@ public class DateUtil {
             return currentDateFormat.parse(date);
         }
         
+        /**
+         * <p>getStringFromDateTime.</p>
+         *
+         * @param date a {@link java.util.Date} object.
+         * @return a {@link java.lang.String} object.
+         */
         public static String getStringFromDateTime(Date date){
             if (date == null){
                 return null;                
             }
             return dateTimeFormatter.format(date);
         }
+        /**
+         * <p>getStringFromDateTime.</p>
+         *
+         * @param date a {@link java.util.Date} object.
+         * @param currentDateFormat a {@link java.text.SimpleDateFormat} object.
+         * @return a {@link java.lang.String} object.
+         */
         public static String getStringFromDateTime(Date date, SimpleDateFormat currentDateFormat){
             if (date == null){
                 return null;                
@@ -94,6 +144,12 @@ public class DateUtil {
             return currentDateFormat.format(date);
         }
         
+        /**
+         * <p>getDateOnlyStringFromDateTime.</p>
+         *
+         * @param date a {@link java.util.Date} object.
+         * @return a {@link java.lang.String} object.
+         */
         public static String getDateOnlyStringFromDateTime(Date date){
             if (date == null){
                 return null;                
@@ -101,6 +157,11 @@ public class DateUtil {
             return dateFormatter.format(date);
         }
         
+        /**
+         * <p>getMaxDate.</p>
+         *
+         * @return a {@link java.util.Date} object.
+         */
         public static Date getMaxDate(){
             Calendar cal = Calendar.getInstance();
             cal.add(Calendar.YEAR, 3000);
@@ -108,12 +169,23 @@ public class DateUtil {
             //return new Date(Long.MAX_VALUE);
         }
         
+        /**
+         * <p>getTomorrowDate.</p>
+         *
+         * @return a {@link java.util.Date} object.
+         */
         public static Date getTomorrowDate(){        
             Calendar cal = Calendar.getInstance();
             cal.add(Calendar.DAY_OF_YEAR, 1);
             return cal.getTime();
         }
         
+        /**
+         * <p>UTCtoDefaultTimeZone.</p>
+         *
+         * @param date a {@link java.util.Date} object.
+         * @return a {@link java.util.Date} object.
+         */
         public static Date UTCtoDefaultTimeZone(Date date){
             if (date != null){
                 Calendar calendar = Calendar.getInstance();
@@ -135,9 +207,9 @@ public class DateUtil {
     /**
      * Method compares two dates for equality ignoring the time component.
      *
-     * @param date1
-     * @param date2
-     * @return
+     * @param date1 a {@link java.util.Date} object.
+     * @param date2 a {@link java.util.Date} object.
+     * @return a boolean.
      */
     public static boolean areDatesEqualIgnoreTime(Date date1, Date date2)
     {

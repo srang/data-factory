@@ -25,6 +25,11 @@ import java.lang.reflect.Method;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
+/**
+ * <p>FieldPopulationStrategy interface.</p>
+ *
+ * @author srang
+ */
 public interface FieldPopulationStrategy {
 
 
@@ -32,29 +37,35 @@ public interface FieldPopulationStrategy {
      * Try to set the field on obj of class clazz. Return whether or not
      * assignment was successful
      *
-     * @param obj
-     * @param field
-     * @return
+     * @param obj a {@link java.lang.Object} object.
+     * @param field a {@link java.lang.reflect.Field} object.
+     * @return a boolean.
+     * @throws com.github.srang.datafactory.ObjectFieldGenerationException if any.
+     * @throws com.github.srang.datafactory.MalformedFilterException if any.
      */
     public boolean populateField(Object obj, Field field) throws ObjectFieldGenerationException, MalformedFilterException;
 
 
     /**
      * Add filter to the filter chain
-     * @param filter
+     *
+     * @param filter a {@link java.lang.reflect.Method} object.
+     * @throws com.github.srang.datafactory.MalformedFilterException if any.
      */
     public void addFilter(Method filter) throws MalformedFilterException;
 
     /**
      * Use lambdas to add filters to the chain
-     * @param check
-     * @param evaluator
+     *
+     * @param check a {@link java.util.function.Predicate} object.
+     * @param evaluator a {@link java.util.function.Supplier} object.
      */
     public void addFilter(Predicate<Field> check, Supplier<?> evaluator);
 
     /**
      * Ignore field when populating object
-     * @param fieldName
+     *
+     * @param fieldName a {@link java.lang.String} object.
      */
     public void ignoreField(String fieldName);
 }

@@ -33,27 +33,64 @@ import java.util.Random;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
+/**
+ * <p>BaseFactory class.</p>
+ *
+ * @author srang
+ */
 public class BaseFactory<T> {
     private FieldPopulationStrategy populator;
 
     protected Class clazz;
 
+
+    /**
+     * <p>Constructor for BaseFactory.</p>
+     *
+     * @param clazz a {@link java.lang.Class} object.
+     */
     public BaseFactory(Class clazz) {
         this(clazz, null, null, null);
     }
 
+    /**
+     * <p>Constructor for BaseFactory.</p>
+     *
+     * @param clazz a {@link java.lang.Class} object.
+     * @param claxx a {@link java.lang.Class} object.
+     */
     public BaseFactory(Class clazz, Class claxx) {
         this(clazz, null, null, claxx);
     }
 
+    /**
+     * <p>Constructor for BaseFactory.</p>
+     *
+     * @param clazz a {@link java.lang.Class} object.
+     * @param seed a {@link java.util.Random} object.
+     */
     public BaseFactory(Class clazz, Random seed) {
         this(clazz, null, seed, null);
     }
 
+    /**
+     * <p>Constructor for BaseFactory.</p>
+     *
+     * @param clazz a {@link java.lang.Class} object.
+     * @param locale a {@link java.util.Locale} object.
+     */
     public BaseFactory(Class clazz, Locale locale) {
         this(clazz, locale, null, null);
     }
 
+    /**
+     * <p>Constructor for BaseFactory.</p>
+     *
+     * @param clazz a {@link java.lang.Class} object.
+     * @param locale a {@link java.util.Locale} object.
+     * @param seed a {@link java.util.Random} object.
+     * @param populatorImpl a {@link java.lang.Class} object.
+     */
     public BaseFactory(Class clazz, Locale locale, Random seed, Class<? extends BaseFieldPopulationStrategy> populatorImpl) {
         this.clazz = clazz;
         Locale _locale = (locale == null) ? new Locale("en") : locale;
@@ -73,25 +110,52 @@ public class BaseFactory<T> {
 
     }
 
+    /**
+     * <p>Constructor for BaseFactory.</p>
+     *
+     * @param clazz a {@link java.lang.Class} object.
+     * @param populator a {@link com.github.srang.datafactory.FieldPopulationStrategy} object.
+     */
     public BaseFactory(Class clazz, FieldPopulationStrategy populator) {
         this.clazz = clazz;
         this.populator = populator;
     }
 
 
-
+    /**
+     * <p>ignoreField.</p>
+     *
+     * @param fieldName a {@link java.lang.String} object.
+     */
     public void ignoreField(String fieldName) {
         this.populator.ignoreField(fieldName);
     }
 
+    /**
+     * <p>addFilter.</p>
+     *
+     * @param filter a {@link java.lang.reflect.Method} object.
+     * @throws com.github.srang.datafactory.MalformedFilterException if any.
+     */
     public void addFilter(Method filter) throws MalformedFilterException {
         this.populator.addFilter(filter);
     }
 
+    /**
+     * <p>addFilter.</p>
+     *
+     * @param a a {@link java.util.function.Predicate} object.
+     * @param b a {@link java.util.function.Supplier} object.
+     */
     public void addFilter(Predicate<Field> a, Supplier<?> b) {
         this.populator.addFilter(a, b);
     }
 
+    /**
+     * <p>generate.</p>
+     *
+     * @return a T object.
+     */
     public T generate() {
         T obj = this.buildOne();
         ReflectionUtils.doWithFields(obj.getClass(), (Field field) -> {
@@ -125,6 +189,12 @@ public class BaseFactory<T> {
         return obj;
     }
 
+    /**
+     * <p>generate.</p>
+     *
+     * @param count a int.
+     * @return a {@link java.util.List} object.
+     */
     public List<T> generate(int count) {
         List<T> tees = new ArrayList<T>();
         for (int i = 0; i < count; i++) {

@@ -66,10 +66,6 @@ public class BaseFactoryTest {
 
     /**
      * dummy filter for use in test
-     * @param faker
-     * @param field
-     * @param obj
-     * @return
      */
     public static boolean someFilter(Faker faker, Field field, Object obj) {
         if (field.getType().equals(String.class)

@@ -20,10 +20,26 @@ package com.github.srang.datafactory;
  * #L%
  */
 
+/**
+ * <p>MalformedFilterException class.</p>
+ *
+ * @author srang
+ */
 public class MalformedFilterException extends Exception {
+  /**
+   * <p>Constructor for MalformedFilterException.</p>
+   *
+   * @param message a {@link java.lang.String} object.
+   */
   public MalformedFilterException(String message) {
     super(message);
   }
+  /**
+   * <p>Constructor for MalformedFilterException.</p>
+   *
+   * @param message a {@link java.lang.String} object.
+   * @param ex a {@link java.lang.Exception} object.
+   */
   public MalformedFilterException(String message, Exception ex) {
     super(message,ex);
   }

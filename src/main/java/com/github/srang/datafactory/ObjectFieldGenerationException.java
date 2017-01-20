@@ -20,10 +20,26 @@ package com.github.srang.datafactory;
  * #L%
  */
 
+/**
+ * <p>ObjectFieldGenerationException class.</p>
+ *
+ * @author srang
+ */
 public class ObjectFieldGenerationException extends Exception {
+    /**
+     * <p>Constructor for ObjectFieldGenerationException.</p>
+     *
+     * @param message a {@link java.lang.String} object.
+     */
     public ObjectFieldGenerationException (String message) {
         super(message);
     }
+    /**
+     * <p>Constructor for ObjectFieldGenerationException.</p>
+     *
+     * @param message a {@link java.lang.String} object.
+     * @param e a {@link java.lang.Exception} object.
+     */
     public ObjectFieldGenerationException (String message, Exception e) {
         super(message, e);
     }

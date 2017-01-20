@@ -30,19 +30,31 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.*;
 
+/**
+ * <p>BaseFieldPopulationStrategyImpl class.</p>
+ *
+ * @author srang
+ */
 public class BaseFieldPopulationStrategyImpl extends BaseFieldPopulationStrategy {
 
+    /**
+     * <p>Constructor for BaseFieldPopulationStrategyImpl.</p>
+     *
+     * @param faker a {@link com.github.javafaker.Faker} object.
+     */
     public BaseFieldPopulationStrategyImpl(Faker faker) {
         super(faker);
         ignoreField("serialversionuid");
         addBaseFilters();
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean populateField(Object obj, Field field) throws ObjectFieldGenerationException,MalformedFilterException {
         return this.doFilter(obj, field);
     }
 
+    /** {@inheritDoc} */
     @Override
     public void addFilter(Method filter) throws MalformedFilterException {
         if ((filter.getReturnType().equals(Boolean.class) || filter.getReturnType().equals(boolean.class))
@@ -56,11 +68,13 @@ public class BaseFieldPopulationStrategyImpl extends BaseFieldPopulationStrategy
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public void ignoreField(String ignoredField) {
         this.ignoredFields.add(ignoredField.toLowerCase());
     }
 
+    /** {@inheritDoc} */
     @Override
     public void addFilter(FilterProcessor processor) {
         addFilter(new Filter(processor));
@@ -142,6 +156,15 @@ public class BaseFieldPopulationStrategyImpl extends BaseFieldPopulationStrategy
 
     }
 
+    /**
+     * <p>doFilter.</p>
+     *
+     * @param obj a {@link java.lang.Object} object.
+     * @param field a {@link java.lang.reflect.Field} object.
+     * @return a boolean.
+     * @throws com.github.srang.datafactory.ObjectFieldGenerationException if any.
+     * @throws com.github.srang.datafactory.MalformedFilterException if any.
+     */
     protected boolean doFilter(Object obj, Field field) throws ObjectFieldGenerationException,MalformedFilterException {
         for (Filter filter : filters) {
             if (filter.apply(faker, field, obj)) {
