@@ -1,0 +1,4 @@
+eng-SRANG:
+  faker:
+    name:
+      first_name: [srang, srangatang]
