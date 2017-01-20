@@ -1,6 +1,6 @@
-package com.github.datafactory.resources;
+package com.github.srang.datafactory.resources;
 
-import com.github.datafactory.BaseFieldPopulationStrategyImpl;
+import com.github.srang.datafactory.BaseFieldPopulationStrategyImpl;
 import com.github.javafaker.Faker;
 
 import java.lang.reflect.Field;

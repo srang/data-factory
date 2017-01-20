@@ -1,4 +1,4 @@
-package com.github.datafactory;
+package com.github.srang.datafactory;
 
 public class ObjectFieldGenerationException extends Exception {
     public ObjectFieldGenerationException (String message) {

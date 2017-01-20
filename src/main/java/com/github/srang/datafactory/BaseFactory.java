@@ -1,4 +1,4 @@
-package com.github.datafactory;
+package com.github.srang.datafactory;
 
 import com.github.javafaker.Faker;
 import org.springframework.util.ReflectionUtils;

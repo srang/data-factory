@@ -1,4 +1,4 @@
-package com.github.datafactory.util;
+package com.github.srang.datafactory.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

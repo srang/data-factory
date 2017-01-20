@@ -1,4 +1,4 @@
-package com.github.datafactory.resources;
+package com.github.srang.datafactory.resources;
 
 import lombok.Data;
 

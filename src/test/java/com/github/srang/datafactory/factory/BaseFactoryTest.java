@@ -1,11 +1,11 @@
-package com.github.datafactory.factory;
+package com.github.srang.datafactory.factory;
 
-import com.github.datafactory.BaseFactory;
-import com.github.datafactory.BaseFieldPopulationStrategy;
-import com.github.datafactory.resources.SomeObject;
+import com.github.srang.datafactory.BaseFactory;
+import com.github.srang.datafactory.BaseFieldPopulationStrategy;
+import com.github.srang.datafactory.resources.SomeObject;
 import com.github.javafaker.Faker;
-import com.github.datafactory.resources.ObjectFieldPopulationStrategyImpl;
-import com.github.datafactory.resources.SubObject;
+import com.github.srang.datafactory.resources.ObjectFieldPopulationStrategyImpl;
+import com.github.srang.datafactory.resources.SubObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;

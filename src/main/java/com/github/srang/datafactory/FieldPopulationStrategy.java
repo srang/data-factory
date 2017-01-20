@@ -1,4 +1,4 @@
-package com.github.datafactory;
+package com.github.srang.datafactory;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

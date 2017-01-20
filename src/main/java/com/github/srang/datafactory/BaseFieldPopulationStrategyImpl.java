@@ -1,7 +1,7 @@
-package com.github.datafactory;
+package com.github.srang.datafactory;
 
 import com.github.javafaker.Faker;
-import com.github.datafactory.util.DateUtil;
+import com.github.srang.datafactory.util.DateUtil;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
