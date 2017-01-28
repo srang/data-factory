@@ -64,32 +64,8 @@ public class BaseFactoryTest {
         assertNotNull("The objects in the list should be complete", objects.get(0));
     }
 
-    /**
-     * dummy filter for use in test
-     */
-    public static boolean someFilter(Faker faker, Field field, Object obj) {
-        if (field.getType().equals(String.class)
-                && field.getName().toLowerCase().contains("firstname")) {
-            try {
-                field.set(obj, "CRAZYFIRST'NAME");
-                return true;
-            } catch (IllegalAccessException e) {
-            }
-        }
-        return false;
-    }
-
     @Test
-    public void testAddFilterCreation() throws Exception {
-        BaseFactory<SubObject> personFactory = new BaseFactory<>(SubObject.class);
-        personFactory.addFilter(BaseFactoryTest.class.getMethod("someFilter", Faker.class, Field.class, Object.class));
-        SubObject person = personFactory.generate();
-        assertNotNull("Person should be created", person);
-        assertEquals("Person should have name from added filter", "CRAZYFIRST'NAME", person.getFirstName());
-    }
-
-    @Test
-    public void testAddLambdaFilterCreation() {
+    public void testAddFilterCreation() {
         BaseFactory<SubObject> personFactory = new BaseFactory<>(SubObject.class);
         personFactory.addFilter(
                 (Field field) -> field.getType().equals(String.class) && field.getName().toLowerCase().contains("firstname"),

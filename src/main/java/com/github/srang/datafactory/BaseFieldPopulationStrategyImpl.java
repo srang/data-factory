@@ -24,11 +24,9 @@ import com.github.javafaker.Faker;
 import com.github.srang.datafactory.util.DateUtil;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.text.ParseException;
-import java.util.*;
+import java.util.Date;
 
 /**
  * <p>BaseFieldPopulationStrategyImpl class.</p>
@@ -56,28 +54,8 @@ public class BaseFieldPopulationStrategyImpl extends BaseFieldPopulationStrategy
 
     /** {@inheritDoc} */
     @Override
-    public void addFilter(Method filter) throws MalformedFilterException {
-        if ((filter.getReturnType().equals(Boolean.class) || filter.getReturnType().equals(boolean.class))
-                && filter.getParameterCount() == 3
-                && filter.getParameterTypes()[0].equals(Faker.class)
-                && filter.getParameterTypes()[1].equals(Field.class)
-                && filter.getParameterTypes()[2].equals(Object.class)) {
-            addFilter(new Filter(new FilterProcessorImpl(filter)));
-        } else {
-            throw new MalformedFilterException("Provided filter method did not match the required signature. No filter added");
-        }
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public void ignoreField(String ignoredField) {
         this.ignoredFields.add(ignoredField.toLowerCase());
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void addFilter(FilterProcessor processor) {
-        addFilter(new Filter(processor));
     }
 
 
@@ -167,33 +145,11 @@ public class BaseFieldPopulationStrategyImpl extends BaseFieldPopulationStrategy
      */
     protected boolean doFilter(Object obj, Field field) throws ObjectFieldGenerationException,MalformedFilterException {
         for (Filter filter : filters) {
-            if (filter.apply(faker, field, obj)) {
+            if (filter.process(faker, field, obj)) {
                 return true;
             }
         }
         return false;
     }
 
-
-    protected class FilterProcessorImpl implements FilterProcessor {
-        private Method filter;
-
-        public FilterProcessorImpl(Method filter) {
-            this.filter = filter;
-        }
-
-        public boolean process(Faker faker, Field field, Object obj) throws ObjectFieldGenerationException,MalformedFilterException {
-            try {
-                if ((Boolean) filter.invoke("", faker, field, obj)) {
-                    return true;
-                }
-            } catch (IllegalAccessException | InvocationTargetException e) {
-                if (e.getCause() instanceof ObjectFieldGenerationException) {
-                    throw (ObjectFieldGenerationException) e.getCause();
-                }
-                throw new MalformedFilterException("Failed to invoke filter with provided method " + filter.getName(), e);
-            }
-            return false;
-        }
-    }
 }

@@ -21,7 +21,6 @@ package com.github.srang.datafactory;
  */
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
@@ -43,16 +42,7 @@ public interface FieldPopulationStrategy {
      * @throws com.github.srang.datafactory.ObjectFieldGenerationException if any.
      * @throws com.github.srang.datafactory.MalformedFilterException if any.
      */
-    public boolean populateField(Object obj, Field field) throws ObjectFieldGenerationException, MalformedFilterException;
-
-
-    /**
-     * Add filter to the filter chain
-     *
-     * @param filter a {@link java.lang.reflect.Method} object.
-     * @throws com.github.srang.datafactory.MalformedFilterException if any.
-     */
-    public void addFilter(Method filter) throws MalformedFilterException;
+    boolean populateField(Object obj, Field field) throws ObjectFieldGenerationException, MalformedFilterException;
 
     /**
      * Use lambdas to add filters to the chain
@@ -60,12 +50,12 @@ public interface FieldPopulationStrategy {
      * @param check a {@link java.util.function.Predicate} object.
      * @param evaluator a {@link java.util.function.Supplier} object.
      */
-    public void addFilter(Predicate<Field> check, Supplier<?> evaluator);
+    void addFilter(Predicate<Field> check, Supplier<?> evaluator);
 
     /**
      * Ignore field when populating object
      *
      * @param fieldName a {@link java.lang.String} object.
      */
-    public void ignoreField(String fieldName);
+    void ignoreField(String fieldName);
 }

@@ -100,17 +100,12 @@ public abstract class BaseFieldPopulationStrategy implements FieldPopulationStra
         );
     }
     /** {@inheritDoc} */
+    @Override
     public abstract boolean populateField(Object obj, Field field) throws ObjectFieldGenerationException, MalformedFilterException;
 
 
-    /**
-     * <p>addFilter.</p>
-     *
-     * @param filter a {@link com.github.srang.datafactory.BaseFieldPopulationStrategy.FilterProcessor} object.
-     */
-    public abstract void addFilter(FilterProcessor filter);
-
     /** {@inheritDoc} */
+    @Override
     public abstract void ignoreField(String fieldName);
 
     /**
@@ -122,33 +117,24 @@ public abstract class BaseFieldPopulationStrategy implements FieldPopulationStra
         this.filters.push(filter);
     }
 
-
     /** {@inheritDoc} */
+    @Override
     public void addFilter(Predicate<Field> check, Supplier<?> evaluator) {
-        addFilter(new Filter(check, evaluator));
+        addFilter(new FilterProcessor(check, evaluator));
     }
 
-    protected class Filter {
-        protected Predicate<Field> check;
-        protected Supplier<?> evaluate;
-        protected FilterProcessor processor;
+    protected class FilterProcessor implements Filter {
+        Predicate<Field> check;
+        Supplier evaluate;
 
-        public Filter (Predicate<Field> check, Supplier<?> evaluate) {
+        public FilterProcessor (Predicate<Field> check, Supplier<?> evaluate) {
             this.check = check;
             this.evaluate = evaluate;
-            this.processor = null;
         }
 
-        public Filter (FilterProcessor processor) {
-            this.processor = processor;
-            this.check = null;
-            this.evaluate = null;
-        }
-
-        public boolean apply(Faker faker, Field field, Object obj) throws ObjectFieldGenerationException,MalformedFilterException {
-            if (processor != null) {
-                return processor.process(faker, field, obj);
-            } else if (check.test(field)) {
+        @Override
+        public boolean process(Faker faker, Field field, Object obj) throws ObjectFieldGenerationException,MalformedFilterException {
+            if (check.test(field)) {
                 try {
                     field.set(obj, field.getType().cast(evaluate.get()));
                     return true;
@@ -160,7 +146,8 @@ public abstract class BaseFieldPopulationStrategy implements FieldPopulationStra
         }
     }
 
-    public interface FilterProcessor {
+    @FunctionalInterface
+    protected interface Filter {
         boolean process(Faker faker, Field field, Object obj) throws ObjectFieldGenerationException,MalformedFilterException;
     }
 }

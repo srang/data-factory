@@ -24,7 +24,6 @@ import com.github.javafaker.Faker;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +37,7 @@ import java.util.function.Supplier;
  *
  * @author srang
  */
-public class BaseFactory<T> {
+public class BaseFactory<T> implements DataFactory<T> {
     private FieldPopulationStrategy populator;
 
     protected Class clazz;
@@ -59,7 +58,7 @@ public class BaseFactory<T> {
      * @param clazz a {@link java.lang.Class} object.
      * @param claxx a {@link java.lang.Class} object.
      */
-    public BaseFactory(Class clazz, Class claxx) {
+    public BaseFactory(Class clazz, Class<? extends BaseFieldPopulationStrategy>  claxx) {
         this(clazz, null, null, claxx);
     }
 
@@ -121,24 +120,20 @@ public class BaseFactory<T> {
         this.populator = populator;
     }
 
+    @Override
+    public void setPopulator(FieldPopulationStrategy populator) {
+        this.populator = populator;
+    }
+
 
     /**
      * <p>ignoreField.</p>
      *
      * @param fieldName a {@link java.lang.String} object.
      */
+    @Override
     public void ignoreField(String fieldName) {
         this.populator.ignoreField(fieldName);
-    }
-
-    /**
-     * <p>addFilter.</p>
-     *
-     * @param filter a {@link java.lang.reflect.Method} object.
-     * @throws com.github.srang.datafactory.MalformedFilterException if any.
-     */
-    public void addFilter(Method filter) throws MalformedFilterException {
-        this.populator.addFilter(filter);
     }
 
     /**
@@ -147,6 +142,7 @@ public class BaseFactory<T> {
      * @param a a {@link java.util.function.Predicate} object.
      * @param b a {@link java.util.function.Supplier} object.
      */
+    @Override
     public void addFilter(Predicate<Field> a, Supplier<?> b) {
         this.populator.addFilter(a, b);
     }
@@ -156,6 +152,7 @@ public class BaseFactory<T> {
      *
      * @return a T object.
      */
+    @Override
     public T generate() {
         T obj = this.buildOne();
         ReflectionUtils.doWithFields(obj.getClass(), (Field field) -> {
@@ -195,6 +192,7 @@ public class BaseFactory<T> {
      * @param count a int.
      * @return a {@link java.util.List} object.
      */
+    @Override
     public List<T> generate(int count) {
         List<T> tees = new ArrayList<T>();
         for (int i = 0; i < count; i++) {
