@@ -75,7 +75,8 @@ public abstract class BaseFieldPopulationStrategy implements FieldPopulationStra
     }
 
     /**
-     * ensures that object and ignore filter get added absolutely last
+     * <p>init: ensures that object and ignore filter get added absolutely last</p>
+     *
      */
     public void init() {
         //object
