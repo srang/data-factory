@@ -24,7 +24,6 @@ import com.github.javafaker.Faker;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -82,8 +81,8 @@ public abstract class BaseFieldPopulationStrategy implements FieldPopulationStra
         //object
         this.addFilter((Faker faker, Field field, Object obj) -> {
                 if (field.getType().equals(List.class)) {
-                    ParameterizedType stringListType = (ParameterizedType) field.getGenericType();
-                    Class listFieldClass = (Class) stringListType.getActualTypeArguments()[0];
+//                    ParameterizedType stringListType = (ParameterizedType) field.getGenericType();
+//                    Class listFieldClass = (Class) stringListType.getActualTypeArguments()[0];
 //                    if (listFieldClass.getPackage().toString().startsWith(PACKAGE_PREFIX))) {
                         throw new ObjectFieldGenerationException("Field is a list of generatable objects");
 //                    }
@@ -112,7 +111,7 @@ public abstract class BaseFieldPopulationStrategy implements FieldPopulationStra
     /**
      * <p>addFilter.</p>
      *
-     * @param filter a {@link com.github.srang.datafactory.BaseFieldPopulationStrategy.Filter} object.
+     * @param filter a {@link com.github.srang.datafactory.Filter} object.
      */
     protected void addFilter(Filter filter) {
         this.filters.push(filter);
@@ -147,8 +146,4 @@ public abstract class BaseFieldPopulationStrategy implements FieldPopulationStra
         }
     }
 
-    @FunctionalInterface
-    protected interface Filter {
-        boolean process(Faker faker, Field field, Object obj) throws ObjectFieldGenerationException,MalformedFilterException;
-    }
 }
