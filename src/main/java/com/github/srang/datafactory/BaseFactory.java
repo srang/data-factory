@@ -21,7 +21,7 @@ package com.github.srang.datafactory;
  */
 
 import com.github.javafaker.Faker;
-import org.springframework.util.ReflectionUtils;
+import org.apache.commons.lang3.reflect.FieldUtils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
@@ -155,7 +155,7 @@ public class BaseFactory<T> implements DataFactory<T> {
     @Override
     public T generate() {
         T obj = this.buildOne();
-        ReflectionUtils.doWithFields(obj.getClass(), (Field field) -> {
+        FieldUtils.getAllFieldsList(obj.getClass()).forEach(field -> {
             field.setAccessible(true);
             // try to populate fields with appropriate data
             try {
