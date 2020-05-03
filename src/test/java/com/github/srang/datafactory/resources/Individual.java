@@ -20,43 +20,34 @@ package com.github.srang.datafactory.resources;
  * #L%
  */
 
+
 import java.util.Objects;
 
-public class LastObject {
-  String other;
-  String blah;
-  Integer id;
+public class Individual {
+  String secretId;
+  String firstName;
 
-  public String getOther() {
-    return other;
+  public String getSecretId() {
+    return secretId;
   }
 
-  public void setOther(String other) {
-    this.other = other;
+  public void setSecretId(String secretId) {
+    this.secretId = secretId;
   }
 
-  public String getBlah() {
-    return blah;
+  public String getFirstName() {
+    return firstName;
   }
 
-  public void setBlah(String blah) {
-    this.blah = blah;
-  }
-
-  public Integer getId() {
-    return id;
-  }
-
-  public void setId(Integer id) {
-    this.id = id;
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
   }
 
   @Override
   public String toString() {
-    return "LastObject{" +
-        "other='" + other + '\'' +
-        ", blah='" + blah + '\'' +
-        ", id=" + id +
+    return "SuperObject{" +
+        "secretId='" + secretId + '\'' +
+        ", firstName='" + firstName + '\'' +
         '}';
   }
 
@@ -64,14 +55,13 @@ public class LastObject {
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
-    LastObject that = (LastObject) o;
-    return Objects.equals(other, that.other) &&
-        Objects.equals(blah, that.blah) &&
-        Objects.equals(id, that.id);
+    Individual that = (Individual) o;
+    return Objects.equals(secretId, that.secretId) &&
+        Objects.equals(firstName, that.firstName);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(other, blah, id);
+    return Objects.hash(secretId, firstName);
   }
 }
