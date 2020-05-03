@@ -22,10 +22,11 @@ package com.github.srang.datafactory.factory;
 
 import com.github.srang.datafactory.BaseFactory;
 import com.github.srang.datafactory.BaseFieldPopulationStrategy;
-import com.github.srang.datafactory.resources.SomeObject;
+import com.github.srang.datafactory.DataFactory;
+import com.github.srang.datafactory.resources.Citizen;
 import com.github.javafaker.Faker;
 import com.github.srang.datafactory.resources.ObjectFieldPopulationStrategyImpl;
-import com.github.srang.datafactory.resources.SubObject;
+import com.github.srang.datafactory.resources.Person;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -44,9 +45,9 @@ import static org.junit.Assert.*;
 public class BaseFactoryTest {
     @Test
     public void testBaseFactoryCreation() {
-        BaseFactory<SomeObject> objectFactory = new BaseFactory<>(SomeObject.class);
+        DataFactory<Citizen> objectFactory = new BaseFactory<>(Citizen.class);
         assertNotNull("Factory should be instantiatable", objectFactory);
-        SomeObject object = objectFactory.generate();
+        Citizen object = objectFactory.generate();
         assertNotNull("Object should be generated", object);
         assertNotNull("Object should have Integers in it", object.getEmployeeId());
         assertNotNull("Object should have Longs in it", object.getCitizenId());
@@ -56,9 +57,9 @@ public class BaseFactoryTest {
 
     @Test
     public void testBaseFactoryListCreation() {
-        BaseFactory<SomeObject> objectFactory = new BaseFactory<>(SomeObject.class);
+        DataFactory<Citizen> objectFactory = new BaseFactory<>(Citizen.class);
         assertNotNull(objectFactory);
-        List<SomeObject> objects = objectFactory.generate(6);
+        List<Citizen> objects = objectFactory.generate(6);
         assertNotNull("Objects should be generated", objects);
         assertEquals("There should be 6 objects in the list", 6, objects.size());
         assertNotNull("The objects in the list should be complete", objects.get(0));
@@ -66,11 +67,11 @@ public class BaseFactoryTest {
 
     @Test
     public void testAddFilterCreation() {
-        BaseFactory<SubObject> personFactory = new BaseFactory<>(SubObject.class);
+        DataFactory<Person> personFactory = new BaseFactory<>(Person.class);
         personFactory.addFilter(
                 (Field field) -> field.getType().equals(String.class) && field.getName().toLowerCase().contains("firstname"),
                 () -> "Hermione" );
-        SubObject person = personFactory.generate();
+        Person person = personFactory.generate();
 
         assertNotNull("Person should not be null", person);
         assertEquals("Person should have first name from lambda filter", "Hermione", person.getFirstName());
@@ -78,11 +79,11 @@ public class BaseFactoryTest {
 
     @Test
     public void testAddNestedFilterCreation() {
-        BaseFactory<SomeObject> objectFactory = new BaseFactory<>(SomeObject.class);
+        DataFactory<Citizen> objectFactory = new BaseFactory<>(Citizen.class);
         objectFactory.addFilter(
                 (Field field) -> field.getType().equals(String.class) && field.getName().toLowerCase().contains("firstname"),
                 () -> "Hermione" );
-        SomeObject object = objectFactory.generate();
+        Citizen object = objectFactory.generate();
 
         assertNotNull("Nested person should not be null", object.getOneObject());
         assertEquals("Nested person first name should be from added filter", "Hermione", object.getOneObject().getFirstName());
@@ -92,47 +93,48 @@ public class BaseFactoryTest {
     public void testLoadProperties() {
         Locale l =  new Locale("eng","SRANG");
         assertNotNull("locale should be loaded", l);
-        BaseFactory<SubObject> personFactory = new BaseFactory<>(SubObject.class, l);
+        DataFactory<Person> personFactory = new BaseFactory<>(Person.class, l);
         assertNotNull("Factory should be instantiatable with property files specified", personFactory);
-        SubObject person = personFactory.generate();
+        Person person = personFactory.generate();
         assertThat("Person first name should come from property file", person.getFirstName(), is(oneOf("srang", "srangatang")));
     }
 
     @Test
     public void testLoadBuiltInLang() {
-        BaseFactory<SubObject> personFactory = new BaseFactory<>(SubObject.class, new Locale("es"));
+        DataFactory<Person> personFactory = new BaseFactory<>(Person.class, new Locale("es"));
         assertNotNull("Factory should be instantiatable with built in language", personFactory);
-        SubObject person = personFactory.generate();
+        Person person = personFactory.generate();
         assertNotNull("Person should still get a first name", person.getFirstName());
     }
 
     @Test
     public void testSeedRNG() {
-        BaseFactory<SomeObject> objectFactoryA = new BaseFactory<>(SomeObject.class, new Random(123));
-        BaseFactory<SomeObject> objectFactoryB = new BaseFactory<>(SomeObject.class, new Random(123));
+        DataFactory<Citizen> objectFactoryA = new BaseFactory<>(Citizen.class, new Random(123));
+        DataFactory<Citizen> objectFactoryB = new BaseFactory<>(Citizen.class, new Random(123));
 
         assertNotNull("Factory should be instantiatable with random seed", objectFactoryA);
-        SomeObject objectA = objectFactoryA.generate();
-        SomeObject objectB = objectFactoryB.generate();
-        SomeObject objectC = objectFactoryA.generate();
+        Citizen objectA = objectFactoryA.generate();
+        Citizen objectB = objectFactoryB.generate();
+        Citizen objectC = objectFactoryA.generate();
         assertNotNull("Object should generate nested fields", objectA.getOneObject());
         assertEquals("Objects should have identical identifiers", objectA.getEmployeeId(), objectB.getEmployeeId());
+        assertEquals("Objects should have identical fields", objectA, objectB);
         assertEquals("Nested objects should follow seeding", objectA.getOneObject().getFirstName(), objectB.getOneObject().getFirstName());
         assertNotEquals("Subsequent objects with same seed should be different", objectA.getOneObject(), objectC.getOneObject());
     }
 
     @Test
     public void testNestedObjectList() {
-        BaseFactory<SomeObject> objectFactory = new BaseFactory<>(SomeObject.class);
-        SomeObject object = objectFactory.generate();
+        DataFactory<Citizen> objectFactory = new BaseFactory<>(Citizen.class);
+        Citizen object = objectFactory.generate();
         assertNotNull("Factory should be able to generate lists of generatable objects", object.getObjects().get(0).getChildrensNames());
     }
 
     @Test
     public void testIgnoreFilter() {
-        BaseFactory<SomeObject> objectFactory = new BaseFactory<>(SomeObject.class);
+        DataFactory<Citizen> objectFactory = new BaseFactory<>(Citizen.class);
         objectFactory.ignoreField("firstName");
-        SomeObject object = objectFactory.generate();
+        Citizen object = objectFactory.generate();
         assertNull("Factory should be able to ignore inherited fields", object.getFirstName());
         assertNotNull("Factory should be able to generate inherited fields", object.getSecretId());
         assertNull("Factory should ignore nested fields", object.getOneObject().getFirstName());
@@ -146,12 +148,12 @@ public class BaseFactoryTest {
     @Test
     public void testMultiLang() {
         //depends on seeding working
-        BaseFactory<SomeObject> englishFactory = new BaseFactory<>(SomeObject.class, new Random(123));
-        BaseFactory<SomeObject> spanishFactory = new BaseFactory<>(SomeObject.class, new Locale("es"), new Random(123), null);
-        BaseFactory<SomeObject> englishFactoryB = new BaseFactory<>(SomeObject.class, new Locale("en"), new Random(123), null);
-        SomeObject spanishObject = spanishFactory.generate();
-        SomeObject englishObjectB = englishFactoryB.generate();
-        SomeObject englishObject = englishFactory.generate();
+        DataFactory<Citizen> englishFactory = new BaseFactory<>(Citizen.class, new Random(123));
+        DataFactory<Citizen> spanishFactory = new BaseFactory<>(Citizen.class, new Locale("es"), new Random(123), null);
+        DataFactory<Citizen> englishFactoryB = new BaseFactory<>(Citizen.class, new Locale("en"), new Random(123), null);
+        Citizen spanishObject = spanishFactory.generate();
+        Citizen englishObjectB = englishFactoryB.generate();
+        Citizen englishObject = englishFactory.generate();
         assertNotNull("Object should not be null", spanishObject);
         assertNotNull("Object should not be null", englishObject);
         assertNotNull("Object should not be null", englishObjectB);
@@ -162,11 +164,11 @@ public class BaseFactoryTest {
 
     @Test
     public void testSpecifyPopulator() throws Exception {
-        BaseFactory<SomeObject> objectFactory = new BaseFactory<>(SomeObject.class,
+        DataFactory<Citizen> objectFactory = new BaseFactory<>(Citizen.class,
                 BaseFieldPopulationStrategy.create(ObjectFieldPopulationStrategyImpl.class, new Faker()));
 
         assertNotNull("Factory should be created", objectFactory);
-        SomeObject object = objectFactory.generate();
+        Citizen object = objectFactory.generate();
         assertThat("Factory should generate stuff", object.getSecretId(), matchesPattern("[a-z]+"));
 
 
