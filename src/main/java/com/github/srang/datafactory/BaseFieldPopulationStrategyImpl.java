@@ -125,11 +125,14 @@ public class BaseFieldPopulationStrategyImpl extends BaseFieldPopulationStrategy
         );
 
 
-
+        // address
+        this.addFilter(
+                (Field field) -> field.getType().equals(String.class) && field.getName().toLowerCase().contains("address"),
+                () -> faker.address().fullAddress()
+        );
 
         String[] filters = {
                 "organization", //
-                "address" //
         };
 
     }

@@ -39,6 +39,7 @@ import java.util.Random;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.matchesPattern;
 import static org.hamcrest.Matchers.oneOf;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.*;
 
 @RunWith(JUnit4.class)
@@ -180,5 +181,13 @@ public class BaseFactoryTest {
         object = objectFactory.generate();
         assertEquals("Factory should generate stuff", "ASDF", object.getSecretId());
 
+    }
+
+    @Test
+    public void testAddressPopulation() {
+        DataFactory<Citizen> objectFactory = new BaseFactory<>(Citizen.class);
+        Citizen object = objectFactory.generate();
+        assertThat("Address should look like an address", object.getAddress(),
+                matchesPattern("[a-zA-Z. ]*([0-9]+ ){1,2}[A-Za-z. ']+, [a-zA-Z -']+, [A-Z]{2} [0-9]{5}(-[0-9]{4})?"));
     }
 }
