@@ -8,6 +8,7 @@
     <artifactId>data-factory</artifactId>
     <packaging>jar</packaging>
     <name>Data Factory</name>
+
     <description>Library for generating rich objects</description>
     <url>https://github.com/srang/DataFactory</url>
     <licenses>
@@ -39,13 +40,17 @@
         <developerConnection>scm:git:ssh://github.com:srang/data-factory.git</developerConnection>
         <url>http://github.com/srang/data-factory/tree/master</url>
     </scm>
+
     <properties>
         <java.version>1.8</java.version>
-        <junit.version>4.13</junit.version>
+        <junit.version>5.7.0</junit.version>
         <commons.version>3.11</commons.version>
         <faker.version>1.0.2</faker.version>
         <hamcrest.version>2.0.0.0</hamcrest.version>
+        <mvn.compiler.plugin.version>3.5.1</mvn.compiler.plugin.version>
+        <mvn.javadoc.plugin.version>2.10.4</mvn.javadoc.plugin.version>
     </properties>
+
     <distributionManagement>
         <repository>
             <id>github</id>
@@ -53,6 +58,7 @@
             <url>https://maven.pkg.github.com/srang/data-factory</url>
         </repository>
     </distributionManagement>
+
     <dependencies>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -65,8 +71,8 @@
             <version>${faker.version}</version>
         </dependency>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
@@ -83,7 +89,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.10.4</version>
+                <version>${mvn.javadoc.plugin.version}</version>
                 <configuration>
                     <defaultVersion>${project.version}</defaultVersion>
                     <source>8</source>
@@ -131,7 +137,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.5.1</version>
+                <version>${mvn.compiler.plugin.version}</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
