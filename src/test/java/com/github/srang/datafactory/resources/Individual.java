@@ -26,14 +26,7 @@ import java.util.Objects;
 public class Individual {
   String secretId;
   String firstName;
-
-  public String getSecretId() {
-    return secretId;
-  }
-
-  public void setSecretId(String secretId) {
-    this.secretId = secretId;
-  }
+  String fullName;
 
   public String getFirstName() {
     return firstName;
@@ -43,12 +36,29 @@ public class Individual {
     this.firstName = firstName;
   }
 
+  public String getSecretId() {
+    return secretId;
+  }
+
+  public void setSecretId(String secretId) {
+    this.secretId = secretId;
+  }
+
+  public String getFullName() {
+    return fullName;
+  }
+
+  public void setFullName(String fullName) {
+    this.fullName = fullName;
+  }
+
   @Override
   public String toString() {
-    return "SuperObject{" +
-        "secretId='" + secretId + '\'' +
-        ", firstName='" + firstName + '\'' +
-        '}';
+    return "Individual{" +
+            "secretId='" + secretId + '\'' +
+            ", firstName='" + firstName + '\'' +
+            ", fullName='" + fullName + '\'' +
+            '}';
   }
 
   @Override
@@ -57,11 +67,12 @@ public class Individual {
     if (o == null || getClass() != o.getClass()) return false;
     Individual that = (Individual) o;
     return Objects.equals(secretId, that.secretId) &&
-        Objects.equals(firstName, that.firstName);
+            Objects.equals(firstName, that.firstName) &&
+            Objects.equals(fullName, that.fullName);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(secretId, firstName);
+    return Objects.hash(secretId, firstName, fullName);
   }
 }

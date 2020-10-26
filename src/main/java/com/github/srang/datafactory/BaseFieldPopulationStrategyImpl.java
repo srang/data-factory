@@ -124,6 +124,11 @@ public class BaseFieldPopulationStrategyImpl extends BaseFieldPopulationStrategy
                 () -> faker.name().firstName()
         );
 
+        // fullName
+        this.addFilter(
+                (Field field) -> field.getType().equals(String.class) && field.getName().toLowerCase().contains("fullname"),
+                () -> faker.name().nameWithMiddle()
+        );
 
         // address
         this.addFilter(
