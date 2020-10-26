@@ -30,6 +30,16 @@ public class Citizen extends Individual {
   String organization;
   Integer employeeId;
   Long citizenId;
+  String address;
+
+  public String getAddress() {
+    return address;
+  }
+
+  public void setAddress(String address) {
+    this.address = address;
+  }
+
 
   public List<Person> getObjects() {
     return objects;
@@ -88,6 +98,7 @@ public class Citizen extends Individual {
         ", organization='" + organization + '\'' +
         ", employeeId=" + employeeId +
         ", citizenId=" + citizenId +
+        ", address=" + address +
         '}';
   }
 
@@ -101,11 +112,12 @@ public class Citizen extends Individual {
         Objects.equals(lastName, that.lastName) &&
         Objects.equals(organization, that.organization) &&
         Objects.equals(employeeId, that.employeeId) &&
-        Objects.equals(citizenId, that.citizenId);
+        Objects.equals(citizenId, that.citizenId) &&
+        Objects.equals(address, that.address);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(objects, oneObject, lastName, organization, employeeId, citizenId);
+    return Objects.hash(objects, oneObject, lastName, organization, employeeId, citizenId, address);
   }
 }
