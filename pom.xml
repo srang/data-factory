@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.srang</groupId>
-    <version>2.0.0-SNAPSHOT</version>
+    <version>2.0.0</version>
     <artifactId>data-factory</artifactId>
     <packaging>jar</packaging>
     <name>Data Factory</name>
@@ -35,9 +35,9 @@
         </developer>
     </developers>
     <scm>
-        <connection>scm:git:git://github.com/srang/DataFactory.git</connection>
-        <developerConnection>scm:git:ssh://github.com:srang/DataFactory.git</developerConnection>
-        <url>http://github.com/srang/DataFactory/tree/master</url>
+        <connection>scm:git:git://github.com/srang/data-factory.git</connection>
+        <developerConnection>scm:git:ssh://github.com:srang/data-factory.git</developerConnection>
+        <url>http://github.com/srang/data-factory/tree/master</url>
     </scm>
     <properties>
         <java.version>1.8</java.version>
@@ -49,7 +49,7 @@
         <repository>
             <id>github</id>
             <name>GitHub srang Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/srang/DataFactory</url>
+            <url>https://maven.pkg.github.com/srang/data-factory</url>
         </repository>
     </distributionManagement>
     <dependencies>
