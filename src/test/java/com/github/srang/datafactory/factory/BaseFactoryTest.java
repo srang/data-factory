@@ -25,6 +25,7 @@ import com.github.srang.datafactory.BaseFieldPopulationStrategy;
 import com.github.srang.datafactory.DataFactory;
 import com.github.srang.datafactory.resources.Citizen;
 import com.github.javafaker.Faker;
+import com.github.srang.datafactory.resources.Individual;
 import com.github.srang.datafactory.resources.ObjectFieldPopulationStrategyImpl;
 import com.github.srang.datafactory.resources.Person;
 import org.junit.jupiter.api.RepeatedTest;
@@ -179,6 +180,14 @@ public class BaseFactoryTest {
         object = objectFactory.generate();
         assertEquals("ASDF", object.getSecretId(), "Factory should generate stuff");
 
+    }
+
+    @RepeatedTest(10)
+    public void testNamePopulation() {
+        DataFactory<Individual> objectFactory = new BaseFactory<>(Individual.class);
+        Individual object = objectFactory.generate();
+        assertThat("Name should look like an name", object.getFullName(),
+                matchesPattern("([A-Z][a-z.]+ )?([A-Z][a-zA-Z']+ ?){2,3}( ([IVX]+|MD|DVM|PhD|Jr.|Sr.))?"));
     }
 
     @RepeatedTest(10)

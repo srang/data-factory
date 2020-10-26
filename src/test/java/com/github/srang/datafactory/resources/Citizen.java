@@ -40,7 +40,6 @@ public class Citizen extends Individual {
     this.address = address;
   }
 
-
   public List<Person> getObjects() {
     return objects;
   }
