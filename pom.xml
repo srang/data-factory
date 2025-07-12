@@ -44,7 +44,7 @@
     <properties>
         <java.version>17</java.version>
         <junit.version>5.8.1</junit.version>
-        <commons.version>3.12.0</commons.version>
+        <commons.version>3.18.0</commons.version>
         <faker.version>1.0.2</faker.version>
         <hamcrest.version>2.0.0.0</hamcrest.version>
         <mvn.compiler.plugin.version>3.5.1</mvn.compiler.plugin.version>
